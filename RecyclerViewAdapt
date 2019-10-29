@@ -1,0 +1,87 @@
+package com.example.assignment2final;
+
+import android.content.Context;
+import android.hardware.SensorEvent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+
+    private static final String TAG = "RecyclerViewAdapter";
+    SensorEvent event;
+    private ArrayList<String> mStats;
+    List<String> mStatsNum;
+    private Context mContext;
+
+    private float mShots, mSaves;
+
+
+    public RecyclerViewAdapter(Context context, ArrayList<String>stats, List<String>statsNum){
+        mContext = context;
+        mStats = stats;
+        mStatsNum = statsNum;
+        String DEBUG_TAG = "MainActivity";
+        Log.d(DEBUG_TAG,"RecyclerViewAdapter: called");
+    }
+
+    @Override
+    //responsble ifor infalting view
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        String DEBUG_TAG = "MainActivity";
+        Log.d(DEBUG_TAG,"onCreateViewHolder: called");
+
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_items,parent,false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
+    }
+
+    @Override
+    //changed based on layout and what i want
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        String DEBUG_TAG = "MainActivity";
+        Log.d(DEBUG_TAG,"onBindViewHolder: called");
+
+        //Log.d(TAG,"onBindViewHolder: called."); //called based on how many items are called
+        //sensor lists are made HERE
+        holder.textViewSaves.setText(mStats.get(position));
+
+        //puts the text into the recyclerview
+
+    }
+
+
+    @Override
+    public int getItemCount() {
+        String DEBUG_TAG = "MainActivity";
+        Log.d(DEBUG_TAG,"getItemCount: called");
+        return mStats.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        TextView textViewShots;
+        TextView textViewSaves;
+        RelativeLayout parent_layout;
+        public ViewHolder(View itemView){
+            super(itemView);
+            parent_layout = itemView.findViewById(R.id.parent_layout);
+
+
+            textViewSaves = itemView.findViewById(R.id.textViewSaves);
+            textViewShots = itemView.findViewById(R.id.textViewShots);
+
+        }
+
+    }
+}
